@@ -215,10 +215,12 @@ class SwipeController: NSObject {
         actionsView.topAnchor.constraint(equalTo: swipeable.topAnchor).isActive = true
         
         if orientation == .left {
-            actionsView.rightAnchor.constraint(equalTo: actionsContainerView.leftAnchor).isActive = true
+            actionsView.rightAnchor.constraint(equalTo: actionsContainerView.leftAnchor, constant: 8).isActive = true
         } else {
-            actionsView.leftAnchor.constraint(equalTo: actionsContainerView.rightAnchor).isActive = true
+            actionsView.leftAnchor.constraint(equalTo: actionsContainerView.rightAnchor, constant: 8).isActive = true
         }
+        
+        actionsView.layer.cornerRadius = 8
         
         actionsView.setNeedsUpdateConstraints()
         
