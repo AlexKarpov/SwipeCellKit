@@ -90,6 +90,13 @@ class SwipeController: NSObject {
             guard let actionsView = swipeable.actionsView, let actionsContainerView = self.actionsContainerView else { return }
             guard swipeable.state.isActive else { return }
             
+            if swipeable.state == .animatingToCenter {
+                let swipedCell = scrollView?.swipeables.first(where: { $0.state == .dragging || $0.state == .left || $0.state == .right }) as? UIView
+                if let swipedCell = swipedCell, swipedCell != self.swipeable {
+                    return
+                }
+            }
+            
             let translation = gesture.translation(in: target).x
             scrollRatio = 1.0
             
@@ -99,7 +106,7 @@ class SwipeController: NSObject {
                 target.center.x = gesture.elasticTranslation(in: target,
                                                              withLimit: .zero,
                                                              fromOriginalCenter: CGPoint(x: originalCenter, y: 0)).x
-                swipeable.actionsView?.visibleWidth = abs(swipeable.frame.minX)
+                swipeable.actionsView?.visibleWidth = abs((swipeable as Swipeable).frame.minX)
                 scrollRatio = elasticScrollRatio
                 return
             }
@@ -137,9 +144,11 @@ class SwipeController: NSObject {
                     scrollRatio = elasticScrollRatio
                 }
             }
-        case .ended, .cancelled:
+        case .ended, .cancelled, .failed:
             guard let actionsView = swipeable.actionsView, let actionsContainerView = self.actionsContainerView else { return }
-            guard swipeable.state.isActive else { return }
+            if swipeable.state.isActive == false && swipeable.bounds.midX == target.center.x  {
+                return
+            }
             
             swipeable.state = targetState(forVelocity: velocity)
             
@@ -192,10 +201,12 @@ class SwipeController: NSObject {
         
         var contentEdgeInsets = UIEdgeInsets.zero
         if let visibleTableViewRect = delegate?.swipeController(self, visibleRectFor: scrollView) {
-            let visibleSwipeableRect = swipeable.frame.intersection(visibleTableViewRect)
+            
+            let frame = (swipeable as Swipeable).frame
+            let visibleSwipeableRect = frame.intersection(visibleTableViewRect)
             if visibleSwipeableRect.isNull == false {
-                let top = visibleSwipeableRect.minY > swipeable.frame.minY ? max(0, visibleSwipeableRect.minY - swipeable.frame.minY) : 0
-                let bottom = max(0, swipeable.frame.size.height - visibleSwipeableRect.size.height - top)
+                let top = visibleSwipeableRect.minY > frame.minY ? max(0, visibleSwipeableRect.minY - frame.minY) : 0
+                let bottom = max(0, frame.size.height - visibleSwipeableRect.size.height - top)
                 contentEdgeInsets = UIEdgeInsets(top: top, left: 0, bottom: bottom, right: 0)
             }
         }
@@ -335,7 +346,7 @@ class SwipeController: NSObject {
 extension SwipeController: UIGestureRecognizerDelegate {
     func gestureRecognizerShouldBegin(_ gestureRecognizer: UIGestureRecognizer) -> Bool {
         if gestureRecognizer == tapGestureRecognizer {
-            if UIAccessibilityIsVoiceOverRunning() {
+            if UIAccessibility.isVoiceOverRunning {
                 scrollView?.hideSwipeables()
             }
             
