@@ -2,6 +2,22 @@
 
 `SwipeCellKit` adheres to [Semantic Versioning](http://semver.org/).
 
+## [2.5.0](https://github.com/jerkoch/SwipeCellKit/releases/tag/2.5.0)
+
+#### Fixed
+
+- Update to Swift 4.2 and Xcode 10 Support (#215)
+
+---
+
+## [2.4.3](https://github.com/jerkoch/SwipeCellKit/releases/tag/2.4.3)
+
+#### Fixed
+
+- Fix issue where swipe cell does not return to neutral position correctly when swipping cell very quickly (#215)
+
+---
+
 ## [2.4.2](https://github.com/jerkoch/SwipeCellKit/releases/tag/2.4.2)
 
 #### Fixed
