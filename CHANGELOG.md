@@ -2,7 +2,56 @@
 
 `SwipeCellKit` adheres to [Semantic Versioning](http://semver.org/).
 
-## [2.5.1](https://github.com/jerkoch/SwipeCellKit/releases/tag/2.5.0)
+## [2.7.1](https://github.com/jerkoch/SwipeCellKit/releases/tag/2.7.1)
+
+#### Added
+
+- Support for Xcode 10.3+ (#353)
+
+---
+
+## [2.7.0](https://github.com/jerkoch/SwipeCellKit/releases/tag/2.7.0)
+
+#### Added
+
+- Support for updated SPM (Swift Package Manager) for Xcode 11+ (#325)
+- Support for iOS 13 Dark Mode (#337)
+
+#### Fixed
+
+- Fixed hit test issue related to hidden cells (#314)
+- Fixed cell reuse layout issue (#335)
+- Fixed issue where a deleted cell that was being cell reused has the contentView offset incorrectly. (#355)
+- Fixed issue where on iOS 13 UICollectionViewCell does not perform swipe animation. (#333)
+
+---
+
+## [2.6.0](https://github.com/jerkoch/SwipeCellKit/releases/tag/2.6.0)
+
+#### Added
+
+- SwipeCellKit is now using Swift 5
+
+---
+
+## [2.5.4](https://github.com/jerkoch/SwipeCellKit/releases/tag/2.5.4)
+
+#### Fixed
+
+- Fixed Carthage when building with Xcode 10.2 (#297)
+
+---
+
+## [2.5.2](https://github.com/jerkoch/SwipeCellKit/releases/tag/2.5.2)
+
+#### Fixed
+
+- Added support for Xcode 10.2 (#279, #283)
+- Compatibility with applications using Swift 5 (see Mail App Example)
+
+---
+
+## [2.5.1](https://github.com/jerkoch/SwipeCellKit/releases/tag/2.5.1)
 
 #### Fixed
 
